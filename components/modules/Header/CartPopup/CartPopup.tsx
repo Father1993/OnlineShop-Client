@@ -1,22 +1,41 @@
 import { useStore } from 'effector-react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { forwardRef } from 'react'
+import { forwardRef, useEffect } from 'react'
 import Link from 'next/link'
 import { IWrappedComponentProps } from '@/types/common'
 import { withClickOutside } from '@/utils/withClickOutside'
 import { $mode } from '@/context/mode'
-import { $shoppingCart } from '@/context/shopping-cart'
+import { $shoppingCart, setShoppingCart } from '@/context/shopping-cart'
 import ShoppingCartSvg from '@/components/elements/ShoppingCartSvg/ShoppingCartSvg'
 import styles from '@/styles/cartPopup/index.module.scss'
 import CartPopupItem from './CartPopupItem'
+import { getCartItemsFx } from '@/app/api/shoppingCart'
+import { $user } from '@/context/user'
+import { toast } from 'react-toastify'
 
 const CartPopup = forwardRef<HTMLDivElement, IWrappedComponentProps>(
   ({ open, setOpen }, ref) => {
     const mode = useStore($mode)
+    const user = useStore($user)
     const shoppingCart = useStore($shoppingCart)
     const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : ''
 
     const toggleCartDropDown = () => setOpen(!open)
+
+    useEffect(() => {
+      loadCartItems()
+    }, [])
+
+    const loadCartItems = async () => {
+      try {
+        const cartItems = await getCartItemsFx(
+          `/boiler-parts/cart/${user.userId}`
+        )
+        setShoppingCart(cartItems)
+      } catch (error) {
+        toast.error((error as Error).message)
+      }
+    }
 
     return (
       <div className={styles.cart} ref={ref}>
