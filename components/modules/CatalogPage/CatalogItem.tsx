@@ -1,7 +1,6 @@
 import { $mode } from '@/context/mode'
-import { IBoilerPart } from '@/types/boilerparts'
+import { IBoilerPart } from '@/types/boilerParts'
 import { useStore } from 'effector-react'
-import { useState } from 'react'
 import Link from 'next/link'
 import { formatPrice } from '@/utils/common'
 import { $shoppingCart } from '@/context/shopping-cart'
@@ -9,6 +8,7 @@ import CartHoverCheckedSvg from '@/components/elements/CartHoverCheckedSvg/CartH
 import CartHoverSvg from '@/components/elements/CartHoverSvg/CartHoverSvg'
 import { toggleCartItem } from '@/utils/shopping_cart'
 import { $user } from '@/context/user'
+import { removeFromCartFx } from '@/app/api/shoppingCart'
 import spinnerStyles from '@/styles/spinner/index.module.scss'
 import styles from '@/styles/catalog/index.module.scss'
 
@@ -18,10 +18,9 @@ const CatalogItem = ({ item }: { item: IBoilerPart }) => {
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : ''
   const shoppingCart = useStore($shoppingCart)
   const isInCart = shoppingCart.some((cartItem) => cartItem.partId === item.id)
-  const [spinner, setSpinner] = useState(false)
+  const spinner = useStore(removeFromCartFx.pending)
 
-  const toggleToCart = () =>
-    toggleCartItem(user.username, item.id, isInCart, setSpinner)
+  const toggleToCart = () => toggleCartItem(user.username, item.id, isInCart)
   return (
     <li className={`${styles.catalog__list__item} ${darkModeClass}`}>
       <img src={JSON.parse(item.images)[0]} alt={item.name} />
