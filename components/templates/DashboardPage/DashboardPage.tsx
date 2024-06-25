@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { IBoilerParts } from '@/types/boilerparts'
+import { IBoilerParts } from '@/types/boilerParts'
 import { getBestsellersOrNewPartsFx } from '@/app/api/boilerParts'
 import { toast } from 'react-toastify'
 import { $mode } from '@/context/mode'
@@ -27,6 +27,15 @@ const DashboardPage = () => {
   useEffect(() => {
     loadBoilerParts()
   }, [])
+
+  useEffect(() => {
+    if (shoppingCart.length) {
+      setShowAlert(true)
+      return
+    }
+
+    setShowAlert(false)
+  }, [shoppingCart.length])
 
   const loadBoilerParts = async () => {
     try {

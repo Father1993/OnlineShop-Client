@@ -1,15 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 
+import { useEffect } from 'react'
 import Slider from 'react-slick'
 import { useStore } from 'effector-react'
-import { $mode } from '@/context/mode'
-import { useEffect } from 'react'
+import 'slick-carousel/slick/slick-theme.css'
+import 'slick-carousel/slick/slick.css'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import Link from 'next/link'
 import { IDashboardSlider } from '@/types/dashboard'
+import { $mode } from '@/context/mode'
 import skeletonStyles from '@/styles/skeleton/index.module.scss'
-import 'slick-carousel/slick/slick-theme.css'
-import 'slick-carousel/slick/slick.css'
 import { formatPrice } from '@/utils/common'
 import styles from '@/styles/dashboard/index.module.scss'
 
