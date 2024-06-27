@@ -4,8 +4,10 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { IOrderAccordionProps } from '@/types/order'
 import { $mode } from '@/context/mode'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import { $shoppingCart } from '@/context/shopping-cart'
+import { $shoppingCart, $totalPrice } from '@/context/shopping-cart'
 import CartPopupItem from '../Header/CartPopup/CartPopupItem'
+import { formatPrice } from '@/utils/common'
+import OrderItem from './OrderItem'
 import EditSvg from '@/components/elements/EditSvg/EditSvg'
 import DoneSvg from '@/components/elements/DoneSvg/DoneSvg'
 import styles from '@/styles/order/index.module.scss'
@@ -17,10 +19,18 @@ const OrderAccordion = ({
   const mode = useStore($mode)
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : ''
   const shoppingCart = useStore($shoppingCart)
+  const totalPrice = useStore($totalPrice)
   const isMedia550 = useMediaQuery(550)
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(true)
 
-  const toggleAccordion = () => setExpanded(!expanded)
+  const openAccordion = () => {
+    setOrderIsReady(false)
+    setExpanded(true)
+  }
+  const closeAccordion = () => {
+    setOrderIsReady(true)
+    setExpanded(false)
+  }
 
   return (
     <>
@@ -38,7 +48,7 @@ const OrderAccordion = ({
         </h3>
         <button
           className={styles.order__cart__title__btn}
-          onClick={toggleAccordion}
+          onClick={openAccordion}
         >
           <span>
             <EditSvg />
@@ -67,7 +77,7 @@ const OrderAccordion = ({
                     isMedia550 ? (
                       <CartPopupItem key={item.id} item={item} />
                     ) : (
-                      <div />
+                      <OrderItem item={item} key={item.id} />
                     )
                   )
                 ) : (
@@ -80,6 +90,25 @@ const OrderAccordion = ({
                   </li>
                 )}
               </ul>
+              <div className={styles.order__cart__footer}>
+                <div className={styles.order__cart__footer__total}>
+                  <span
+                    className={`${styles.order__cart__footer__text} ${darkModeClass}`}
+                  >
+                    Общая сумма заказа
+                  </span>
+                  <span className={styles.order__cart__footer__price}>
+                    {formatPrice(totalPrice)} P
+                  </span>
+                </div>
+                <button
+                  className={styles.order__cart__footer__btn}
+                  onClick={closeAccordion}
+                  disabled={!shoppingCart.length}
+                >
+                  Продолжить
+                </button>
+              </div>
             </div>
           </motion.div>
         )}

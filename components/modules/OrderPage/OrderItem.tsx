@@ -1,15 +1,22 @@
-import { IShoppingCartItem } from '@/types/shoppingCart'
 import { useStore } from 'effector-react'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { IShoppingCartItem } from '@/types/shoppingCart'
 import { $mode } from '@/context/mode'
 import { usePrice } from '@/hooks/usePrice'
-import styles from '@/styles/order/index.module.scss'
 import Link from 'next/link'
+import CartItemCounter from '@/components/elements/CartItemCounter/CartItemCounter'
+import { formatPrice } from '@/utils/common'
+import styles from '@/styles/order/index.module.scss'
+import spinnerStyles from '@/styles/spinner/index.module.scss'
 
 const OrderItem = ({ item }: { item: IShoppingCartItem }) => {
   const mode = useStore($mode)
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : ''
+  const spinnerDarkModeClass =
+    mode === 'dark' ? '' : `${spinnerStyles.dark_mode}`
   const { price, spinner, decreasePrice, deleteCartItem, increasePrice } =
     usePrice(item.count, item.partId, item.price)
+  const isMedia1160 = useMediaQuery(1160)
 
   return (
     <li className={styles.order__cart__list__item}>
@@ -19,9 +26,64 @@ const OrderItem = ({ item }: { item: IShoppingCartItem }) => {
             <img src={item.image} alt={item.name} />
           </div>
           <Link href={`/catalog/${item.partId}`} passHref legacyBehavior>
-            <a></a>
+            <a
+              className={`${styles.order__cart__list__item__text} ${darkModeClass}`}
+            >
+              <span>
+                {item.name.replace('.', '')}, {item.parts_manufacturer},{' '}
+                {item.boiler_manufacturer}
+              </span>
+            </a>
           </Link>
         </div>
+        {isMedia1160 &&
+          (item.in_stock === 0 ? (
+            <span className={styles.cart__popup__list__item__empty}>
+              Нет на складе
+            </span>
+          ) : (
+            <CartItemCounter
+              totalCount={item.in_stock}
+              partId={item.partId}
+              initialCount={item.count}
+              increasePrice={increasePrice}
+              decreasePrice={decreasePrice}
+            />
+          ))}
+      </div>
+      <div className={styles.order__cart__list__item__right}>
+        {!isMedia1160 &&
+          (item.in_stock === 0 ? (
+            <span className={styles.order__cart__list__item__empty}>
+              Нет на складе
+            </span>
+          ) : (
+            <CartItemCounter
+              totalCount={item.in_stock}
+              partId={item.partId}
+              initialCount={item.count}
+              increasePrice={increasePrice}
+              decreasePrice={decreasePrice}
+            />
+          ))}
+        <span
+          className={`${styles.order__cart__list__item__price} ${darkModeClass}`}
+        >
+          {formatPrice(price)} P
+        </span>
+        <button
+          className={styles.order__cart__list__item__delete}
+          onClick={deleteCartItem}
+        >
+          {spinner ? (
+            <span
+              className={`${spinnerStyles.spinner} ${spinnerDarkModeClass}`}
+              style={{ top: '-13px', left: '-30px', width: 25, height: 25 }}
+            />
+          ) : (
+            'Удалить'
+          )}
+        </button>
       </div>
     </li>
   )
