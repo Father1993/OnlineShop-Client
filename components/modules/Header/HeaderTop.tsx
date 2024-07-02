@@ -17,7 +17,7 @@ const HeaderTop = () => {
   return (
     <div className={styles.header__top}>
       <div className={`container ${styles.header__top__container}`}>
-        {!useMediaQuery && <CityButton />}
+        {!isMedia950 && <CityButton />}
         {isMedia950 && (
           <button
             onClick={toggleOpen}

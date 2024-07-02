@@ -12,12 +12,13 @@ import { checkPaymentFx, makePaymentFx } from '@/app/api/payment'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 import { removeFromCartFx } from '@/app/api/shoppingCart'
-import { $user } from '@/context/user'
+import { $user, $userCity } from '@/context/user'
 import styles from '@/styles/order/index.module.scss'
 import spinnerStyles from '@/styles/spinner/index.module.scss'
 
 const OrderPage = () => {
   const user = useStore($user)
+  const userCity = useStore($userCity)
   const mode = useStore($mode)
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : ''
   const shoppingCart = useStore($shoppingCart)
@@ -41,6 +42,7 @@ const OrderPage = () => {
       const data = await makePaymentFx({
         url: '/payment',
         amount: totalPrice,
+        description: `Заказ №1 ${userCity.city.length ? `Город: ${userCity.city}, улица: ${userCity.street}` : ''}`,
       })
       sessionStorage.setItem('paymentId', data.id)
       router.push(data.confirmation.confirmation_url)
@@ -57,7 +59,10 @@ const OrderPage = () => {
       })
       if (data.status === 'succeeded') {
         resetCart()
+        return
       }
+
+      sessionStorage.removeItem('paymentId')
     } catch (error) {
       toast.error((error as Error).message)
       resetCart()
