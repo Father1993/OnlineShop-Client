@@ -53,17 +53,15 @@ const DashboardSlider = ({
   return (
     <Slider {...settings} className={styles.dashboard__slider}>
       {spinner ? (
-        [...Array(8)].map((_, i) => {
-          return (
-            <div
-              className={`${skeletonStyles.skeleton__item} ${mode === 'dark' ? `${skeletonStyles.dark_mode}` : ''}`}
-              key={i}
-              style={width}
-            >
-              <div className={skeletonStyles.skeleton__item__light} />
-            </div>
-          )
-        })
+        [...Array(8)].map((_, i) => (
+          <div
+            className={`${skeletonStyles.skeleton__item} ${mode === 'dark' ? `${skeletonStyles.dark_mode}` : ''}`}
+            key={i}
+            style={width}
+          >
+            <div className={skeletonStyles.skeleton__item__light} />
+          </div>
+        ))
       ) : items.length ? (
         items.map((item) => (
           <div
