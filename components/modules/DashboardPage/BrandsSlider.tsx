@@ -71,17 +71,15 @@ const BrandsSlider = () => {
   }
   return (
     <Slider {...settings} className={styles.dashboard__brands__slider}>
-      {brandItems.map((item) => {
-        return (
-          <div
-            className={`${styles.dashboard__brands__slide} ${darkModeClass}`}
-            key={item.id}
-            style={{ width: isMedia768 ? 124 : 180 }}
-          >
-            <img src={item.img} alt={item.alt} />
-          </div>
-        )
-      })}
+      {brandItems.map((item) => (
+        <div
+          className={`${styles.dashboard__brands__slide} ${darkModeClass}`}
+          key={item.id}
+          style={{ width: isMedia768 ? 124 : 180 }}
+        >
+          <img src={item.img} alt={item.alt} />
+        </div>
+      ))}
     </Slider>
   )
 }
