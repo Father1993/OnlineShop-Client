@@ -66,6 +66,7 @@ const CartItemCounter = ({
         url: `/shopping-cart/count/${partId}`,
         payload: { count: count - 1 },
       })
+      updateCartItemCount({ partId, count: data.count })
     } catch (error) {
       toast.error((error as Error).message)
     } finally {
