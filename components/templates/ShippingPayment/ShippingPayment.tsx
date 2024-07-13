@@ -52,7 +52,9 @@ const ShippingPayment = () => {
         <div className={`${styles.shipping_payment__tabs} ${darkModeClass}`}>
           <ul className={styles.shipping_payment__tabs__controls}>
             <li
-              className={`${styles.shipping_payment__tabs__controls__item} ${tab1 ? styles.active : ''} ${darkModeClass}`}
+              className={`${styles.shipping_payment__tabs__controls__item} ${
+                tab1 ? styles.active : ''
+              } ${darkModeClass}`}
             >
               <button className={darkModeClass} onClick={handleTab1}>
                 Как работает курьерская служба?
@@ -60,7 +62,9 @@ const ShippingPayment = () => {
             </li>
 
             <li
-              className={`${styles.shipping_payment__tabs__controls__item} ${tab2 ? styles.active : ''} ${darkModeClass}`}
+              className={`${styles.shipping_payment__tabs__controls__item} ${
+                tab2 ? styles.active : ''
+              } ${darkModeClass}`}
             >
               <button className={darkModeClass} onClick={handleTab2}>
                 Как получить товар из пункта самовывоза?
@@ -68,7 +72,9 @@ const ShippingPayment = () => {
             </li>
 
             <li
-              className={`${styles.shipping_payment__tabs__controls__item} ${tab3 ? styles.active : ''} ${darkModeClass}`}
+              className={`${styles.shipping_payment__tabs__controls__item} ${
+                tab3 ? styles.active : ''
+              } ${darkModeClass}`}
             >
               <button className={darkModeClass} onClick={handleTab3}>
                 Какие способы оплаты?
@@ -76,7 +82,9 @@ const ShippingPayment = () => {
             </li>
 
             <li
-              className={`${styles.shipping_payment__tabs__controls__item} ${tab4 ? styles.active : ''} ${darkModeClass}`}
+              className={`${styles.shipping_payment__tabs__controls__item} ${
+                tab4 ? styles.active : ''
+              } ${darkModeClass}`}
             >
               <button className={darkModeClass} onClick={handleTab4}>
                 Как узнать статус заказанного товара?
