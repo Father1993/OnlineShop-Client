@@ -36,7 +36,7 @@ const Footer = () => {
                   arrowOpenClass={styles.open}
                 >
                   <OnlineStoreContent />
-                  <div style={{ height: 17 }}></div>
+                  <div style={{ height: 17 }} />
                 </Accordion>
               )}
             </div>
@@ -55,7 +55,7 @@ const Footer = () => {
                   arrowOpenClass={styles.open}
                 >
                   <CompanyContent />
-                  <div style={{ height: 17 }}></div>
+                  <div style={{ height: 17 }} />
                 </Accordion>
               )}
             </div>
