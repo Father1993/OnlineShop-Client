@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable max-len */
 import { useStore } from 'effector-react'
 import Link from 'next/link'
@@ -83,7 +84,7 @@ const Breadcrumbs = ({
               className={`${styles.breadcrumbs__item} ${darkModeClass}`}
             >
               {/**eslint-disable-next-line @typescript-eslint/ban-ts-comment
-               * @ts-ignore */}
+               * @ts-expect-error */}
               <Crumb
                 {...crumb}
                 key={idx}
