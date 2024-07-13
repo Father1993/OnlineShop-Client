@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { $mode } from '@/context/mode'
 import { IOption, SelectOptionType } from '@/types/common'
 import { createSelectOption } from '@/utils/common'
@@ -49,6 +50,7 @@ const FilterSelect = ({
           updateCategoryOption('По популярности')
           setBoilerPartsByPopularity()
           break
+
         default:
           updateCategoryOption('Сначала дешевые')
           setBoilerPartsCheapFirst()
