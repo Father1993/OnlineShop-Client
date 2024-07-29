@@ -2,6 +2,12 @@
 
 ## Этот проект представляет собой онлайн-магазин, построенный на базе Next.js и NestJS.
 
+### Live preview: https://onlineshop-client.onrender.com/
+
+Test USER:
+Login: ron,
+password ron123,
+
 ### Функциональные возможности:
 
 - Регистрация и авторизация пользователей
