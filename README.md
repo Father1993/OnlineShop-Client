@@ -4,9 +4,9 @@
 
 ### Live preview: https://onlineshop-client.onrender.com/
 
-Test USER:
-Login: ron,
-password ron123,
+Test USER: <br>
+Login: ron, <br>
+password: ron123,
 
 ### Функциональные возможности:
 
